@@ -9,6 +9,7 @@ const Header = styled.div`
     display: flex;
     align-items: center;
     color: white;
+    justify-content: space-between;
 `;
 
 const style = { Header };
