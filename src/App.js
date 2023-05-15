@@ -3,7 +3,8 @@ import {
   Navigate,
   RouterProvider,
 } from "react-router-dom";
-import Login from './pages/Login'
+import Login from './pages/Login/Login';
+import Users, {usersLoader} from './pages/Users/Users';
 import './App.css';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
     },
     {
       path: '/users',
-      element: <div>users!!</div>
+      element: <Users />,
+      loader: () => usersLoader(readCookie('access_token')),
     },
     {
       path: '/',
@@ -31,6 +33,17 @@ function App() {
   return (
     <RouterProvider router={router} />
   );
+}
+
+const readCookie = (name) => {
+  const cookies = document.cookie.split(';')
+  let formCookie = "";
+  cookies.forEach((cookie) => {
+    if(cookie.startsWith(name)){
+       formCookie = cookie.replace(`${name}=`,"");
+    }
+  })
+  return formCookie;
 }
 
 export default App;

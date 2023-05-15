@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import config from '../config';
+import config from '../../config';
 import style from './style';
 
 const Login = (props) => {
@@ -26,6 +26,7 @@ const Login = (props) => {
                     navigate('/login');
                 else {
                     document.cookie = "access_token="+response.access_token;
+                    window.localStorage.setItem('username', data.username);
                     navigate('/users');
                 };
             }).catch(err => console.error(err))
