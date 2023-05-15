@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Checkbox /> test suite should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bgqQcB guDQoi"
+  >
+    <div
+      class="sc-gTRrQi jovHXp"
+      data-testid="modal"
+    >
+      <h2>
+        Details
+      </h2>
+      <div
+        class="content"
+      >
+        text
+      </div>
+      <div
+        class="actions"
+      >
+        <button
+          class="toggle-button"
+        >
+          close
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`<Modal /> test suite should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bgqQcB guDQoi"
+  >
+    <div
+      class="sc-gTRrQi jovHXp"
+      data-testid="modal"
+    >
+      <h2>
+        Details
+      </h2>
+      <div
+        class="content"
+      >
+        text
+      </div>
+      <div
+        class="actions"
+      >
+        <button
+          class="toggle-button"
+        >
+          close
+        </button>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

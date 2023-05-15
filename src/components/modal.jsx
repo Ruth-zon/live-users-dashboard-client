@@ -11,8 +11,8 @@ const Modal = (props) => {
   }
   return (
     <style.ModalFade>
-      <style.Modal>
-        <h2>Modal Window</h2>
+      <style.Modal data-testid="modal">
+        <h2>Details</h2>
         <div class="content">{props.children}</div>
         <div class="actions">
           <button class="toggle-button" onClick={onClose}>
