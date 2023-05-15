@@ -16,7 +16,7 @@ const Login = (props) => {
       username: e.target.username.value,
       password: e.target.password.value,
     };
-    fetch(`${"http://localhost:3000"}/${url}`, {
+    fetch(`${config.REACT_APP_BACKEND_URL}/${url}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

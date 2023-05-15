@@ -8,7 +8,7 @@ const getItem = (key) =>
     return key === storedKey ? decodeURIComponent(storedValue) : total;
   }, "");
 
-const setItem = (key, value, numberOfDays) => {
+const setItem = (key, value) => {
   document.cookie = `${key}=${value}; path=/`;
 };
 

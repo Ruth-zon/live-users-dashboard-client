@@ -1,17 +1,37 @@
-import React from "react";
-import { Link, useLoaderData, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import config from "../../config";
 import useCookie from "../../utils/useCookie";
 import style from "./style";
 
 const Users = () => {
-  const users = useLoaderData();
+  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const [token, setToken] = useCookie("access_token");
   const username = window.localStorage.getItem("username");
 
-  const logout = async e => {
+  const getUsers = async (token) => {
+    console.log("token", token);
+    let response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/user`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + getItem("access_token"),
+      },
+    });
+    response = await response.json();
+    setUsers(response);
+  };
+
+  useEffect(() => {
+    setInterval(() => {
+      getUsers();
+    }, config.REACT_APP_REFRESH_SEC * 1000);
+    getUsers();
+  }, []);
+
+  const logout = async (e) => {
     e.preventDefault();
-    let response = await fetch(`${"http://localhost:3000"}/auth/logout`, {
+    let response = await fetch(`${config.REACT_APP_BACKEND_URL}/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +41,7 @@ const Users = () => {
     response = await response.json();
     if (response.statusCode === 200) {
       setToken(undefined);
-      navigate('/login');
+      navigate("/login");
     }
   };
   return (
@@ -32,21 +52,33 @@ const Users = () => {
           {"logout"}
         </Link>
       </style.Header>
-      {users.length ? users.map((user) => (
-        <div key={user.username}>{user.username}</div>
-      )) : null}
+      <style.Table>
+        {users.length ? (
+          <tr>
+            {Object.keys(users[0]).map((key) => (
+              <th key={key}>{key}</th>
+            ))}
+          </tr>
+        ) : null}
+        {users.length
+          ? users.map((user) => (
+              <tr key={user.username}>
+                {Object.keys(users[0]).map((key) => (
+                  <td key={key}>{user[key]}</td>
+                ))}
+              </tr>
+            ))
+          : null}
+      </style.Table>
     </div>
   );
 };
-
-export const usersLoader = async (token) => {
-  const response = await fetch(`${"http://localhost:3000"}/user`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
-    },
-  });
-  return await response.json();
-};
+const getItem = (key) =>
+  document.cookie.split("; ").reduce((total, currentCookie) => {
+    const item = currentCookie.split("=");
+    const storedKey = item[0];
+    const storedValue = item[1];
+    return key === storedKey ? decodeURIComponent(storedValue) : total;
+  }, "");
 
 export default Users;
